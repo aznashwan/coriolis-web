@@ -325,10 +325,12 @@ class ConnectionsStore extends Reflux.Store
             field.type = "dropdown"
             field.options = [
               // Values need to be strings, due to a limitation in react-dropdown
-              {label: "Yes", value: "true"},
-              {label: "No", value: "false"}
+              {label: "true", value: "true"},
+              {label: "false", value: "false"}
             ]
-            field.default = field.default && "true"
+            if (typeof field.default !== "boolean") {
+              field.default = false
+            }
             break
 
           case "string":
