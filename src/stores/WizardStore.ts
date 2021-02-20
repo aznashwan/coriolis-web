@@ -68,7 +68,7 @@ class WizardStore {
 
   @observable schedules: Schedule[] = []
 
-  @observable defaultStorage: string | null = null
+  @observable defaultStorage: { value: string | null, busType?: string | null } | undefined
 
   @observable storageMap: StorageMap[] = []
 
@@ -178,8 +178,8 @@ class WizardStore {
     this.data.networks.push(network)
   }
 
-  @action updateDefaultStorage(value: string | null) {
-    this.defaultStorage = value
+  @action updateDefaultStorage(defaultStorage: { value: string | null, busType?: string | null }) {
+    this.defaultStorage = defaultStorage
   }
 
   @action updateStorage(storage: StorageMap) {
@@ -192,7 +192,7 @@ class WizardStore {
 
   @action clearStorageMap() {
     this.storageMap = []
-    this.defaultStorage = null
+    this.defaultStorage = undefined
   }
 
   @action addSchedule(schedule: Schedule) {
@@ -228,7 +228,7 @@ class WizardStore {
   @action async create(
     type: string,
     data: WizardData,
-    defaultStorage: string | null,
+    defaultStorage: { value: string | null, busType?: string | null } | undefined,
     storageMap: StorageMap[],
     uploadedUserScripts: InstanceScript[],
   ): Promise<void> {
@@ -247,7 +247,7 @@ class WizardStore {
   @action async createMultiple(
     type: string,
     data: WizardData,
-    defaultStorage: string | null,
+    defaultStorage: { value: string | null, busType?: string | null } | undefined,
     storageMap: StorageMap[],
     uploadedUserScripts: InstanceScript[],
   ): Promise<boolean> {
